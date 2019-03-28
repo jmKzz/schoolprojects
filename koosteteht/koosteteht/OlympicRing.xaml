@@ -1,0 +1,29 @@
+﻿<Window x:Class="koosteteht.OlympicRing"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:koosteteht"
+        mc:Ignorable="d"
+        Title="OlympicRing" Height="1000" Width="1000">
+    <Grid>
+        <local:OmaCanvas x:Name="omaCanvas">
+            <Ellipse x:Name="e1" Width="150" Height="150" Stroke="DodgerBlue" StrokeThickness="10" Canvas.Left="196" Canvas.Top="287" />
+            <Ellipse x:Name="e2" Width="150" Height="150" Stroke="Yellow" StrokeThickness="10" Canvas.Left="271" Canvas.Top="358" />
+            <Ellipse x:Name="e4" Width="150" Height="150" Stroke="Green" StrokeThickness="10" Canvas.Left="445" Canvas.Top="358" />
+            <Ellipse x:Name="e5" Width="150" Height="150" Stroke="Red" StrokeThickness="10" Canvas.Left="513" Canvas.Top="287" />
+            
+            <Button x:Name="animateButton" Content="Animate" Canvas.Left="782" Canvas.Top="334" Width="77" Height="38"/>
+            <Button x:Name="resetButton" Content="Reset" Canvas.Left="782" Canvas.Top="399" Width="77" Height="38"/>
+
+            <local:OmaCanvas.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="1.5,0">
+                    <GradientStop Color="DodgerBlue" Offset="0.1"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </local:OmaCanvas.Background>
+        </local:OmaCanvas>
+
+    </Grid>
+
+</Window>

@@ -1,0 +1,54 @@
+C:\Users\it15\source\repos\koosteteht\koosteteht\bin\Debug\koosteteht.exe
+C:\Users\it15\source\repos\koosteteht\koosteteht\bin\Debug\koosteteht.pdb
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.csprojResolveAssemblyReference.cache
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\MainWindow.g.cs
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\App.g.cs
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht_MarkupCompile.cache
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht_MarkupCompile.lref
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\MainWindow.baml
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.g.resources
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.Properties.Resources.resources
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.csproj.GenerateResource.Cache
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.csproj.CoreCompileInputs.cache
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.exe
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.pdb
+C:\Users\it15\source\repos\koosteteht\koosteteht\bin\Debug\koosteteht.exe.config
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\bin\Debug\koosteteht.exe.config
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\bin\Debug\koosteteht.exe
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\bin\Debug\koosteteht.pdb
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.csprojResolveAssemblyReference.cache
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\MainWindow.g.cs
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\App.g.cs
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht_MarkupCompile.cache
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht_MarkupCompile.lref
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\MainWindow.baml
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.g.resources
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.Properties.Resources.resources
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.csproj.GenerateResource.Cache
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.csproj.CoreCompileInputs.cache
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.exe
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.pdb
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\Window1.g.cs
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\Window1.baml
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\bin\Debug\fi-FI\koosteteht.resources.dll
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.Properties.Resources.fi-FI.resources
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\fi-FI\koosteteht.resources.dll
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\OlympicRing.g.cs
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\OlympicRing.baml
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\RikasTeksti.g.cs
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\obj\Debug\RikasTeksti.baml
+C:\Users\it15\source\repos\koosteteht\koosteteht\bin\Debug\fi-FI\koosteteht.resources.dll
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\OlympicRing.g.cs
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\RikasTeksti.g.cs
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\Window1.g.cs
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\OlympicRing.baml
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\RikasTeksti.baml
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\Window1.baml
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\koosteteht.Properties.Resources.fi-FI.resources
+C:\Users\it15\source\repos\koosteteht\koosteteht\obj\Debug\fi-FI\koosteteht.resources.dll
+C:\Users\it15\source\repos\koosteteht\koosteteht\bin\Debug\MonitoredUndo.dll
+C:\Users\it15\source\repos\koosteteht\koosteteht\bin\Debug\MonitoredUndo.pdb
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\bin\Debug\MonitoredUndo.dll
+C:\Users\jmKz OW\source\repos\koosteteht\koosteteht\bin\Debug\MonitoredUndo.pdb
