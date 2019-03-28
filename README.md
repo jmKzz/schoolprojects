@@ -31,4 +31,4 @@ Just a basic to-do list that I did using javascript, html and css. I made it so 
 
 ![threejs](https://user-images.githubusercontent.com/41001254/55139440-74bee300-513e-11e9-877b-c7f604104fdd.PNG)
 
-Just some fun visualization. The car and door are interactable with some keypresses. This runs in a browser and Firefox is preferred.
+Just some fun visualization with imported models and a self made house by using threejs geometry system. The car and the door are interactable with some keypresses. This runs in a browser and Firefox is preferred.
