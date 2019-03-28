@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"> 
+        <title>Muistilista</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <style>
+        body{
+            margin: 0 auto;
+            font-family: Verdana, sans-serif;
+            font-size: 1.1em;
+        }
+        #alku{
+            background: blue;
+            border-radius: 10px;
+            width: 900px;
+            margin: 0 auto;
+        }
+        header{
+            color: white;
+            text-align: center;
+            width: 900px;
+            padding-top: 5px;
+            margin: 0 auto;
+            clear: both;
+        }
+        #teksti{
+            border-radius: 4px;
+            padding: 5px 10px;
+        }
+        .button {
+          display: inline-block;
+          padding: 5px 10px;
+          font-size: 17px;
+          cursor: pointer;
+          text-align: center;
+          text-decoration: none;
+          outline: none;
+          color: #fff;
+          background: linear-gradient(to bottom right, #00d2ff, #3a7bd5);
+          border: none;
+          border-radius: 4px;
+        }
+        .button:active {
+          background-color: #3e8e41;
+          transform: translateY(2px);
+        }
+        form{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            text-align: center;
+            margin: 0 auto;
+            padding: 0;
+        }
+        #test{
+            border-radius: 12px;
+            margin: 10px auto;
+            border: 2px solid black;
+            padding-top: 0px;
+            height: 900px;
+            width: 900px;
+            background: linear-gradient(to bottom right, #00d2ff, #3a7bd5);
+			overflow: scroll;
+        }
+        li{
+            border-bottom: 2px solid black;
+            margin: 1px auto;
+            padding: 10px;
+            color: #fff;
+            overflow: hidden;
+        }
+        footer{
+            font-family: Helvetica;
+            background: blue;
+            color: white;
+            width: 900px;
+            height: 25px;
+            clear: both;
+            text-align: center;
+            margin: 0 auto;
+            padding: 5px 10px 0 0;
+            border-radius: 6px;
+        }
+        @media only screen and (max-width: 600px) {
+            #alku, header, form, #test, footer{
+                width: 600px;
+            }
+            header{
+                font-size: 1.2em;
+            }
+            #teksti{
+                padding: 8px 12px;
+                font-size: 1.2em;
+                width: 250px;
+                margin-right: 5px;
+            }
+            .button{
+                font-size: 1.35em;
+                padding: 10px 16px;
+                margin-right: 1px;
+            }
+            #test{
+                font-size: 1.35em;
+            }
+            li{
+                padding: 20px;
+            }
+        }
+    </style>
+    <body>
+        <div id="alku">
+            <header><h2>Muistilista</h2></header>
+            <form onsubmit="return false;"> <!--Estää sivun refreshauksen kun yrittää painaa ENTER-->
+                <input type="text" id="teksti" placeholder="Kirjoita..."/>
+                <input type="button" class="button" value="Lisää" onclick="lisaa()"/>
+                <input type="button" class="button" value="Tyhjennä" onclick="tyhjenna()"/>
+            </form>
+        </div>
+        
+        <div id="test">
+            <ul id="lista">
+		    </ul>
+		</div>
+		
+        <footer>Made by Juha-Matti Kuusniemi</footer>
+        
+        <script>
+        
+        function lisaa() {
+            var lisattava;
+            lisattava = document.getElementById("teksti").value;
+            if (lisattava != ""){   //suoriutuu vain jos tekstifield ei ole tyhjä
+                var lista = document.getElementById("lista");
+                var uusiRivi = document.createElement("li");
+			    var uusiTeksti = document.createTextNode(lisattava);
+			    uusiRivi.appendChild(uusiTeksti);
+			    
+			    uusiRivi.onclick = function() {     // https://stackoverflow.com/questions/17012157/remove-clicked-li-onclick , simppeli ja hyvä ratkaisu li-elementtien generoimisen yhteydessä onclick funktion lisäämiseen    
+                    this.parentNode.removeChild(this); // poistaa painetun li -elementin
+                }
+                
+			    lista.insertBefore(uusiRivi, lista.firstChild);     //https://stackoverflow.com/questions/2007357/how-to-set-dom-element-as-the-first-child
+			                                                        //näyttää paljon järkevämmältä kun käyttäjä lisää tekstiä
+            }
+			document.getElementById("teksti").value = "";   //tyhjentää teksti fieldin
+			document.getElementById("teksti").focus();  //focussaa teksti fieldiin
+		}
+        function tyhjenna(){
+            document.getElementById("lista").innerHTML = "";    //tyhjentää listan
+        }
+        </script>
+    </body>
+</html>
