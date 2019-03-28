@@ -7,7 +7,7 @@ A little showcase for some stuff that I have made during my studies so far. Thes
 ![joukkoliikenne_ikkuna3](https://user-images.githubusercontent.com/41001254/55141653-8f478b00-5143-11e9-9783-80a72f6b1e4b.PNG)
 
 It is meant for the public transport drivers and it includes an speedometer, timed detection when movement comes to a halt, a query which asks for a reason for the occured stop
-and viewable log information for the stops. It also can detect your location and show it in Google Maps with a marker. In addition the user can keep track of the amount passangers by adding/reducing with the + - buttons. All the necessary generated information are also stored into memory. 
+and viewable log information for the stops. It can also detect your location and show it in Google Maps with a marker. In addition the user can keep track of the amount passangers by adding/reducing with the + - buttons. All the necessary generated information are also stored into memory. 
 
 <h3>Jigsaw puzzle for tablet</h3>
 
@@ -17,7 +17,9 @@ This was made during the summer for a customer. It was made with Unity C# and it
 
 <h3>Paint software</h3>
 
-I used Visual Studio to make this one and it has several essential features made for it. For example you can save or print your creations. Redo and Undo functions also work to an extent and the software has some localization with the menus. Painting itself has no issues and you can also create shapes like circles or rectangles by creating an instance, in other words spawn them.
+![wpfpaint](https://user-images.githubusercontent.com/41001254/55143144-cd927980-5146-11e9-952b-5e10bd8b9277.PNG)
+
+I used Visual Studio to make this one and it has several essential features made for it. For example you can save or print your creations. Redo and Undo functions also work to an extent and the software has some localization with the menus. Painting itself has no issues and you can also create shapes like circles or rectangles by creating an instance, in other words spawn them. The picture is also work of Picasso if you can't tell :D.
 
 <h3>To-do list</h3>
 
