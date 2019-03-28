@@ -1,4 +1,4 @@
-# schoolprojects
+# School projects
 A little showcase for some stuff that I have made during my studies so far. These are in order according to the folders.
 <h3>Application for public transportation</h3>
 
