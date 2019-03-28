@@ -13,7 +13,7 @@ and viewable log information for the stops. It can also detect your location and
 
 ![palapelit_tablet](https://user-images.githubusercontent.com/41001254/55139801-4c83b400-513f-11e9-9924-bac29a612d55.jpg)
 
-This was made during the summer for a customer. It was made with Unity C# and it's meant to use with a tablet. More specifically it was made with Apple products in mind (iPad) and required an MAC for building it. 
+This was made during the summer for a customer. It was made with Unity C# and it's meant to use with a tablet. More specifically it was made with Apple products in mind (iPad) and required an MacBook to build it. 
 
 <h3>Paint software</h3>
 
