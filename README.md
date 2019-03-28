@@ -2,7 +2,9 @@
 A little showcase for some stuff that I have made during my studies so far. These are in order according to the folders.
 <h3>Application for public transportation</h3>
 
-![joukkoliikenne_ikkuna](https://user-images.githubusercontent.com/41001254/55140409-b05aac80-5140-11e9-896e-3e86bf18e1af.PNG)
+![joukkoliikenne_ikkuna](https://user-images.githubusercontent.com/41001254/55141399-06c8ea80-5143-11e9-83b3-7690335e95ac.PNG)
+![joukkoliikenne_ikkuna2](https://user-images.githubusercontent.com/41001254/55141503-32e46b80-5143-11e9-9200-f682805c71cd.PNG)
+![joukkoliikenne_ikkuna3](https://user-images.githubusercontent.com/41001254/55141653-8f478b00-5143-11e9-9783-80a72f6b1e4b.PNG)
 
 It is meant for the public transport drivers and it includes an speedometer, timed detection when movement comes to a halt, a query which asks for a reason for the occured stop
 and viewable log information for the stops. It also can detect your location and show it in Google Maps with a marker. In addition the user can keep track of the amount passangers by adding/reducing with the + - buttons. All the necessary generated information are also stored into memory. 
