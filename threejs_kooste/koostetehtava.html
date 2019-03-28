@@ -1,0 +1,823 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - sky</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				margin: 0px;
+				background-color: #000000;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+
+        <!--<script src="three.js"></script>	tarvii threejs89 jotta .dae tiedostot toimii-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/89/three.js"></script>
+        <script src="http://stemkoski.github.io/Three.js/js/OrbitControls.js"></script>
+		<script src="http://www.threejs.org/examples/js/loaders/DDSLoader.js"></script>
+        <script src="http://www.threejs.org/examples/js/loaders/MTLLoader.js"></script>
+        <script src="http://www.threejs.org/examples/js/loaders/OBJLoader.js"></script>
+        <script src="http://www.threejs.org/examples/js/loaders/ColladaLoader.js"></script>
+        <script src="http://stemkoski.github.io/Three.js/js/KeyboardState.js"></script>
+
+        <script>
+
+			var camera, scene, renderer;
+			var sky, auto, tierinki, mesh;
+			var ovi, etuseina, house, house2, houseWalls, roof;
+			var nopeus, bool, ovikiinni, oviposx, muutseinat;
+			var light1, light2, light3, light4;
+			var ball;
+			var keyboard = new KeyboardState();
+
+			init();
+            animate();
+
+			function init() {
+
+			    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 80, 50000);
+			    camera2 = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 80, 50000);
+				camera.position.z = 13000;
+				camera.position.y = 2500;
+				camera.add(camera2);
+
+				scene = new THREE.Scene();
+
+			    // NOPEUS
+				nopeus = 0.001;
+				bool = new Boolean(false);
+
+                // SUMU
+				scene.fog = new THREE.FogExp2(0x697C7D, 0.00005);
+
+			    //TEKSTUUREJA
+
+				var meshtexture = new THREE.TextureLoader().load('crate.gif');
+				var building_texture = new THREE.TextureLoader().load('building2.jpg');
+				var tiili_texture = new THREE.TextureLoader().load('tiili.jpg');
+				tiili_texture.wrapS = tiili_texture.wrapT = THREE.RepeatWrapping;
+				tiili_texture.repeat.set(2, 2);
+                var ruoho_texture = new THREE.TextureLoader().load('grass.jpg');
+                ruoho_texture.wrapS = ruoho_texture.wrapT = THREE.RepeatWrapping;
+                ruoho_texture.repeat.set(10, 10);
+				var lattia_texture = new THREE.TextureLoader().load('floor.jpg');
+                lattia_texture.wrapS = lattia_texture.wrapT = THREE.RepeatWrapping;
+                lattia_texture.repeat.set(10, 10);
+                var asphalt_texture = new THREE.TextureLoader().load('asphalt.jpg');
+			    asphalt_texture.wrapS = asphalt_texture.wrapT = THREE.RepeatWrapping;
+			    asphalt_texture.repeat.set(10, 10);
+			    var skybox = new THREE.TextureLoader().load('Sky_clouds2.jpg');
+			    var ovifront = new THREE.TextureLoader().load('ovifront2.jpg');
+			    var oviback = new THREE.TextureLoader().load('oviback2.jpg');
+				
+			    // LAATIKKO
+
+			    var meshgeometry = new THREE.BoxBufferGeometry(400, 400, 400);
+			    var meshmaterial = new THREE.MeshLambertMaterial({ map: meshtexture });
+			    mesh = new THREE.Mesh(meshgeometry, meshmaterial);
+			    mesh.position.y = 300;
+			    scene.add(mesh);
+				
+			    // TIERINKI
+
+				var geometry_tie = new THREE.RingGeometry(6, 5, 60);			
+
+				var material_tie = new THREE.MeshPhongMaterial({map: asphalt_texture, side: THREE.DoubleSide });
+				tierinki = new THREE.Mesh(geometry_tie, material_tie);
+				tierinki.rotation.x = -Math.PI / 2;
+				tierinki.position.y = -498;
+				tierinki.scale.x = tierinki.scale.y = tierinki.scale.z = 1500;
+				scene.add(tierinki);
+
+                // RUOHO
+
+				var geometry1 = new THREE.CircleBufferGeometry(30000,150);
+                //var geometry1 = new THREE.BoxBufferGeometry(30000, 30000, 2);
+                var material1 = new THREE.MeshPhongMaterial({ map: ruoho_texture, side: THREE.DoubleSide });
+
+                var ruoho = new THREE.Mesh(geometry1, material1);
+                ruoho.rotation.x = -Math.PI / 2;
+                ruoho.position.y = -500;
+                scene.add(ruoho);
+				
+				// LATTIA
+				
+				var lattia_geometry1 = new THREE.BoxBufferGeometry(7499, 6240, 2);
+                var lattia_material1 = new THREE.MeshPhongMaterial({ map: lattia_texture, shininess: 50 });
+
+                var lattia = new THREE.Mesh(lattia_geometry1, lattia_material1);
+                lattia.rotation.x = -Math.PI / 2;
+				lattia.position.z = 370;
+                lattia.position.y = -498;
+                scene.add(lattia);
+				
+
+                // TAIVAS
+				var geometry3 = new THREE.SphereBufferGeometry(30000, 32, 32, Math.PI/2, Math.PI*2, 0, Math.PI/2);
+                var material3 = new THREE.MeshBasicMaterial({ map: skybox, side: THREE.DoubleSide });
+                sky = new THREE.Mesh(geometry3, material3);
+                sky.position.y = -500;
+                scene.add(sky);
+
+			    //TALON GEOMETRIAA
+
+                var tiili_material = new THREE.MeshStandardMaterial({ map: tiili_texture, side: THREE.DoubleSide, color: 0xce8976 });
+                var tiili_material2 = new THREE.MeshPhongMaterial({ map: tiili_texture, color: 0xce8976, side: THREE.BackSide });
+                var house_material = new THREE.MeshPhongMaterial({ map: building_texture, side: THREE.FrontSide });
+				
+                var houseGeometry = new THREE.Geometry();
+                houseGeometry.vertices.push(new THREE.Vector3(-1.5, 1.0, 0.0));  // VASEN PUOLI, VASEN YLÄ
+                houseGeometry.vertices.push(new THREE.Vector3(-1.5, -1.0, 0.0)); // VASEN PUOLI, VASEN ALA
+                houseGeometry.vertices.push(new THREE.Vector3(1.5, 1.0, 0.0));   // OIKEA PUOLI, OIKEA YLÄ
+                houseGeometry.vertices.push(new THREE.Vector3(1.5, -1.0, 0.0));  // OIKEA PUOLI, OIKEA ALA
+                houseGeometry.vertices.push(new THREE.Vector3(-1.5, -0.1, 0.0));    // VASEN PUOLI, VASEN KESKI
+                houseGeometry.vertices.push(new THREE.Vector3(1.5, -0.1, 0.0));    // OIKEA PUOLI, OIKEA KESKI
+
+			    // OVEN NURKAT
+                houseGeometry.vertices.push(new THREE.Vector3(-0.1666, -1.0, 0.0));       // VASEN ALA NURKKA
+                houseGeometry.vertices.push(new THREE.Vector3(-0.1666, -0.1, 0.0));        // VASEN YLÄ NURKKA
+                houseGeometry.vertices.push(new THREE.Vector3(0.145, -0.1, 0.0));         // OIKEA YLÄ NURKKA
+                houseGeometry.vertices.push(new THREE.Vector3(0.145, -1.0, 0.0));         // OIKEA ALA NURKKA
+
+                /*// VANHA ETUSEINÄ
+                houseGeometry.faces.push(new THREE.Face3(0, 3, 2));
+                houseGeometry.faces.push(new THREE.Face3(3, 0, 1));
+
+                houseGeometry.normalsNeedUpdate = true;                  // JOTTA LAMBERT TOIMII
+                houseGeometry.computeFaceNormals();                      // JOTTA LAMBERT TOIMII
+
+                // ETU SEINÄ
+                houseGeometry.faceVertexUvs[0] = [];
+                houseGeometry.faceVertexUvs[0].push([
+                    new THREE.Vector2(0.01, 1),         
+                    new THREE.Vector2(0.98, 0.05),      
+                    new THREE.Vector2(0.98, 1),
+                ]);
+
+                houseGeometry.faceVertexUvs[1] = [];
+                houseGeometry.faceVertexUvs[0].push([
+                    new THREE.Vector2(0.98, 0.05),
+                    new THREE.Vector2(0.01, 1),
+                    new THREE.Vector2(0.01, 0.02),
+                ]);*/
+
+                // UUSI ETUSEINÄ, JOHON TULEE CUSTOM OVI
+
+                // YLÄOSA
+                houseGeometry.faces.push(new THREE.Face3(0, 5, 2));
+                houseGeometry.faces.push(new THREE.Face3(5, 0, 4));
+
+                // VASENOSA
+                houseGeometry.faces.push(new THREE.Face3(4, 6, 7));
+                houseGeometry.faces.push(new THREE.Face3(6, 4, 1));
+
+                // OIKEAOSA
+                houseGeometry.faces.push(new THREE.Face3(8, 3, 5));
+                houseGeometry.faces.push(new THREE.Face3(3, 8, 9));
+
+
+                houseGeometry.normalsNeedUpdate = true;                  // JOTTA LAMBERT TOIMII
+                houseGeometry.computeFaceNormals();                      // JOTTA LAMBERT TOIMII
+
+                // UV YLÄSEINA
+                houseGeometry.faceVertexUvs[0] = [];
+                houseGeometry.faceVertexUvs[0].push([
+                    new THREE.Vector2(0.01, 1),
+                    new THREE.Vector2(0.98, 0.44),             
+                    new THREE.Vector2(0.98, 1),
+                ]);
+
+                houseGeometry.faceVertexUvs[1] = [];
+                houseGeometry.faceVertexUvs[0].push([
+                    new THREE.Vector2(0.98, 0.44),
+                    new THREE.Vector2(0.01, 1),
+                    new THREE.Vector2(0.01, 0.44),
+                ]);
+
+			    // UV OVEN VIEREISET SEINÄMÄT
+
+                houseGeometry.faceVertexUvs[2] = [];        // VASEN
+                houseGeometry.faceVertexUvs[0].push([
+                    new THREE.Vector2(0.01, 0.44),
+                    new THREE.Vector2((1.333/3), 0.025),
+                    new THREE.Vector2((1.333/3), 0.44),
+                ]);
+
+                houseGeometry.faceVertexUvs[3] = [];        // VASEN
+                houseGeometry.faceVertexUvs[0].push([
+                    new THREE.Vector2((1.333/3), 0.025),
+                    new THREE.Vector2(0.01, 0.44),
+                    new THREE.Vector2(0.01, 0.02),
+                ]);
+
+                houseGeometry.faceVertexUvs[4] = [];        // OIKEA
+                houseGeometry.faceVertexUvs[0].push([
+                    new THREE.Vector2((1.645/3), 0.44),
+                    new THREE.Vector2(0.98, 0.05),
+                    new THREE.Vector2(0.98, 0.44),
+                ]);
+
+                houseGeometry.faceVertexUvs[5] = [];        // OIKEA
+                houseGeometry.faceVertexUvs[0].push([
+                    new THREE.Vector2(0.98, 0.05),
+                    new THREE.Vector2((1.645/3), 0.44),
+                    new THREE.Vector2((1.645/3), 0.03),
+                ]);
+
+                houseGeometry.uvsNeedUpdate = true;
+
+
+                var houseGeometry2 = new THREE.Geometry();
+                houseGeometry2.vertices.push(houseGeometry.vertices[0]);  // VASEN YLÄ
+                houseGeometry2.vertices.push(new THREE.Vector3(-1.5, 1.0, -2.5));
+                houseGeometry2.vertices.push(houseGeometry.vertices[1]); // VASEN ALA
+                houseGeometry2.vertices.push(new THREE.Vector3(-1.5, -1.0, -2.5));
+                houseGeometry2.vertices.push(houseGeometry.vertices[2]);   // OIKEA YLÄ
+                houseGeometry2.vertices.push(new THREE.Vector3(1.5, 1.0, -2.5));
+                houseGeometry2.vertices.push(houseGeometry.vertices[3]);  // OIKEA ALA
+                houseGeometry2.vertices.push(new THREE.Vector3(1.5, -1.0, -2.5));
+                //VAS
+                houseGeometry2.faces.push(new THREE.Face3(0, 3, 1));
+                houseGeometry2.faces.push(new THREE.Face3(0, 3, 2));
+                //OIK
+                houseGeometry2.faces.push(new THREE.Face3(6, 5, 4));
+                houseGeometry2.faces.push(new THREE.Face3(6, 5, 7));
+                //PÄÄTY
+                houseGeometry2.faces.push(new THREE.Face3(5, 3, 7));
+                houseGeometry2.faces.push(new THREE.Face3(5, 3, 1));
+
+                // VASEN SEINÄ
+                houseGeometry2.faceVertexUvs[0] = [];
+                houseGeometry2.faceVertexUvs[0].push([
+                    new THREE.Vector2(1, 1),
+                    new THREE.Vector2(0, 0),
+                    new THREE.Vector2(0, 1),
+                ]);
+
+                houseGeometry2.faceVertexUvs[1] = [];
+                houseGeometry2.faceVertexUvs[0].push([
+                    new THREE.Vector2(1, 1),
+                    new THREE.Vector2(0, 0),
+                    new THREE.Vector2(1, 0),
+                ]);
+
+                // OIKEA SEINÄ
+                houseGeometry2.faceVertexUvs[2] = [];
+                houseGeometry2.faceVertexUvs[0].push([
+                    new THREE.Vector2(0, 0),
+                    new THREE.Vector2(1, 1),
+                    new THREE.Vector2(0, 1),
+                ]);
+
+                houseGeometry2.faceVertexUvs[3] = [];
+                houseGeometry2.faceVertexUvs[0].push([
+                    new THREE.Vector2(0, 0),
+                    new THREE.Vector2(1, 1),
+                    new THREE.Vector2(1, 0),
+                ]);
+
+                // TAKA SEINÄ
+                houseGeometry2.faceVertexUvs[4] = [];
+                houseGeometry2.faceVertexUvs[0].push([
+                    new THREE.Vector2(0, 1),
+                    new THREE.Vector2(1, 0),
+                    new THREE.Vector2(0, 0),
+                ]);
+
+                houseGeometry2.faceVertexUvs[5] = [];
+                houseGeometry2.faceVertexUvs[0].push([
+                    new THREE.Vector2(0, 1),
+                    new THREE.Vector2(1, 0),
+                    new THREE.Vector2(1, 1),
+                ]);
+                houseGeometry.uvsNeedUpdate = true;
+
+                houseGeometry2.normalsNeedUpdate = true;                  // JOTTA LAMBERT TOIMII
+                houseGeometry2.computeFaceNormals();                      // JOTTA LAMBERT TOIMII
+
+
+                // KATTO
+                var roofGeometry = new THREE.Geometry();
+                var roofGeometry2 = new THREE.Geometry();
+                var roofGeometry3 = new THREE.Geometry();
+
+                roofGeometry.vertices.push(new THREE.Vector3(-4.0, -1.0, 0.0));  // VASEN ALA
+                roofGeometry.vertices.push(new THREE.Vector3(4.0, -1.0, 0.0)); // OIKEA ALA
+                roofGeometry.vertices.push(new THREE.Vector3(-4.0, -1.0, -6.3)); // VASEN ALA TAKA
+                roofGeometry.vertices.push(new THREE.Vector3(4.0, -1.0, -6.3)); // OIKEA ALA TAKA
+                roofGeometry.vertices.push(new THREE.Vector3(-4.0, 1.0, -3.15)); // VASEN KÄRKI
+                roofGeometry.vertices.push(new THREE.Vector3(4.0, 1.0, -3.15)); // OIKEA KÄRKI
+
+                // KATTO ETU
+                roofGeometry.faces.push(new THREE.Face3(0, 5, 1));
+                roofGeometry.faces.push(new THREE.Face3(0, 5, 4));
+
+                // KATTO TAKA
+                roofGeometry.faces.push(new THREE.Face3(5, 2, 3));
+                roofGeometry.faces.push(new THREE.Face3(5, 2, 4));
+
+			    // KATTO VASEN SIVU
+                roofGeometry.faces.push(new THREE.Face3(0, 2, 4));
+
+                // KATTO OIKEA SIVU
+                roofGeometry.faces.push(new THREE.Face3(1, 3, 5));
+
+                roofGeometry.normalsNeedUpdate = true;                  // JOTTA LAMBERT TOIMII
+                roofGeometry.computeFaceNormals();                      // JOTTA LAMBERT TOIMII
+                //roofGeometry.computeVertexNormals();
+
+
+                roofGeometry.faces[0].vertexColors[0] = roofGeometry.faces[0].vertexColors[1] = roofGeometry.faces[0].vertexColors[2] = new THREE.Color(0x281a11);  // 281a11
+                roofGeometry.faces[1].vertexColors[0] = roofGeometry.faces[1].vertexColors[1] = roofGeometry.faces[1].vertexColors[2] = new THREE.Color(0x281a11);
+                roofGeometry.faces[2].vertexColors[0] = roofGeometry.faces[2].vertexColors[1] = roofGeometry.faces[2].vertexColors[2] = new THREE.Color(0x281a11);
+                roofGeometry.faces[3].vertexColors[0] = roofGeometry.faces[3].vertexColors[1] = roofGeometry.faces[3].vertexColors[2] = new THREE.Color(0x281a11);
+                roofGeometry.faces[4].vertexColors[0] = roofGeometry.faces[4].vertexColors[1] = roofGeometry.faces[4].vertexColors[2] = new THREE.Color(0x281a11);
+                roofGeometry.faces[5].vertexColors[0] = roofGeometry.faces[5].vertexColors[1] = roofGeometry.faces[5].vertexColors[2] = new THREE.Color(0x281a11);
+
+                var roofcolor = new THREE.MeshLambertMaterial({ vertexColors: THREE.VertexColors, side: THREE.DoubleSide });
+
+			    // OBJEKTEJA
+
+                etuseina = new THREE.Object3D();
+                scene.add(etuseina);			
+
+                house2 = new THREE.Mesh(houseGeometry, tiili_material2);
+                house2.position.z = -10;
+                house2.scale.x = house2.scale.y = house2.scale.z = 2500;
+                etuseina.add(house2);
+
+				house = new THREE.Mesh(houseGeometry, house_material);
+				house.scale.x = house.scale.y = house.scale.z = 2500;
+				etuseina.add(house);
+				
+				//houseWalls = new THREE.Mesh(houseGeometry2, tiili_material);
+				//houseWalls.scale.x = houseWalls.scale.y = houseWalls.scale.z = 2500;
+				houseWalls = new THREE.Mesh(houseGeometry2, tiili_material);
+				houseWalls.scale.x = houseWalls.scale.y = houseWalls.scale.z = 2500;
+				//muutseinat.add(houseWalls);
+				
+				roof = new THREE.Mesh(roofGeometry, roofcolor);
+				roof.scale.x = roof.scale.y = roof.scale.z = 1000;
+				
+				etuseina.position.z = 3500;
+				etuseina.position.y = 2000;
+				//scene.add(house);
+
+				houseWalls.position.z = 3500;
+				houseWalls.position.y = 2000;
+				scene.add(houseWalls);
+
+				roof.position.set(0, 5500, 3500);
+				scene.add(roof);
+			    
+			    // OVI
+
+				ovikiinni = new Boolean(true);
+				var ovigeometry = new THREE.BoxBufferGeometry(775, 2250, 20);
+				
+				var ovimaterials = [
+                       new THREE.MeshBasicMaterial({ color: new THREE.Color(0xbfa187) }),
+                       new THREE.MeshBasicMaterial({ color: new THREE.Color(0xbfa187) }),
+                       new THREE.MeshBasicMaterial({ color: new THREE.Color(0xbfa187) }),
+                       new THREE.MeshBasicMaterial({ color: new THREE.Color(0xbfa187) }),
+                       new THREE.MeshLambertMaterial({ map: ovifront }),
+                       new THREE.MeshLambertMaterial({ map: oviback })
+				];
+
+				ovi = new THREE.Mesh(ovigeometry, ovimaterials);
+				ovi.position.set(-26, -1370, house.position.z);
+				oviposx = ovi.position.x;
+				//ovi.scale.x = ovi.scale.y = ovi.scale.z = 10;
+			    //scene.add(ovi);
+				etuseina.add(ovi);
+
+                // AUTO
+				
+				//	PIVOT AUTOLLE
+				
+				pivot = new THREE.Object3D();
+				
+                tierinki.add(pivot);
+				scene.add(pivot);
+				
+                // AUTON MODEL
+
+				var onProgress = function (xhr) {
+				    if (xhr.lengthComputable) {
+				        var percentComplete = xhr.loaded / xhr.total * 100;
+				        console.log(Math.round(percentComplete, 2) + '% downloaded');
+				    }
+				};
+				var onError = function (xhr) { };
+
+				THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath('./');        // MUUTA
+				mtlLoader.load('dodge-viper-gts.mtl', function (materials) {
+				    materials.preload();
+				    var objLoader = new THREE.OBJLoader();
+				    objLoader.setMaterials(materials);
+				    objLoader.setPath('./');        // MUUTA
+				    objLoader.load('dodge-viper-gts.obj', function (object) {
+				        object.scale.x = object.scale.y = object.scale.z = 100;     // LISÄÄ
+				        object.position.y = -500;
+						object.position.z = 8250;
+				        object.rotation.y = Math.PI/2;
+				        auto = object;
+				        auto.castShadow = true;
+				        //auto.receiveShadow = true;
+						pivot.add(auto);
+				        //scene.add(auto);
+				    }, onProgress, onError);
+				});
+
+			    // CHARIZARD
+
+				var mtlLoader2 = new THREE.MTLLoader();
+				mtlLoader2.setPath('./');        // MUUTA
+				mtlLoader2.load('charizard.mtl', function (materials) {
+				    materials.preload();
+				    var objLoader2 = new THREE.OBJLoader();
+				    objLoader2.setMaterials(materials);
+				    objLoader2.setPath('./');        // MUUTA
+				    objLoader2.load('charizard.obj', function (object) {
+				        object.scale.x = object.scale.y = object.scale.z = 300;     // LISÄÄ
+				        object.rotation.y = -1.4;
+				        object.rotation.x = -1.1;
+				        object.rotation.z = -1.2;
+				        object.position.set(-2200, -50, 5000);
+				        scene.add(object);
+				    }, onProgress, onError);
+				});
+				
+				// JALKAPALLO
+				
+				// loading manager
+				var loadingManager = new THREE.LoadingManager(function () {
+				    ball.scale.x = ball.scale.y = ball.scale.z = 200;
+				    ball.position.x = 1390;
+				    ball.position.y = -300;
+				    ball.position.z = 4440;
+				    scene.add(ball);
+				});
+			    // collada
+				var loader = new THREE.ColladaLoader(loadingManager);
+				loader.load('./Ball.dae', function (collada) {
+				    ball = collada.scene;
+				});
+				
+			    // TALON TEKSTI
+
+				var loadertext = new THREE.FontLoader();
+
+				var materialFront = new THREE.MeshPhongMaterial({ color: 0xffffff });
+				var materialSide = new THREE.MeshPhongMaterial({ color: 0x000099 });
+				var materialArray = [materialFront, materialSide];
+
+				loadertext.load('./font.js', function (font) {                  // font.js on tiedosto kansiossa
+
+				    var geometry_text = new THREE.TextGeometry('Kooste', {
+				        font: font,
+				        size: 80,
+				        height: 5,
+				        curveSegments: 12,
+				        bevelEnabled: true,
+				        bevelThickness: 10,
+				        bevelSize: 8,
+				        bevelSegments: 5
+				    });
+				    textMesh = new THREE.Mesh(geometry_text, materialArray);
+				    textMesh.position.x = -1500;
+				    textMesh.position.y = 1500;
+				    textMesh.position.z = -2680;
+				    scene.add(textMesh);
+				    textMesh.scale.x = textMesh.scale.y = textMesh.scale.z = 5;
+				});
+
+			    // VARJOT
+
+				ruoho.receiveShadow = true;
+				tierinki.receiveShadow = true;
+
+				etuseina.castShadow = true;
+				roof.castShadow = true;
+				//etuseina.receiveShadow = true;
+
+				houseWalls.castShadow = true;
+				//houseWalls.receiveShadow = true;
+				
+
+			    // VALOT
+
+				var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.4);
+				//hemiLight.color.setHSL(0.6, 1, 0.6);
+				//hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+				//hemiLight.color.setHSV(0.6, 0.75, 0.5);
+				//hemiLight.groundColor.setHSV(0.095, 0.5, 0.5);
+				hemiLight.position.set(0, -10000, 0);
+				scene.add(hemiLight);
+                /*
+				var dirLight = new THREE.DirectionalLight(0xffffff, 1);
+				dirLight.position.set(-1, 0.75, 1);
+				dirLight.position.multiplyScalar(50);
+				dirLight.name = "dirlight";
+			    // dirLight.shadowCameraVisible = true;
+
+				scene.add(dirLight);
+
+				dirLight.castShadow = true;
+				dirLight.shadowCameraVisible = true;
+				dirLight.shadowMapWidth = dirLight.shadowMapHeight = 1024 * 2;
+
+				var d = 300;
+
+				dirLight.shadowCameraLeft = -d;
+				dirLight.shadowCameraRight = d;
+				dirLight.shadowCameraTop = d;
+				dirLight.shadowCameraBottom = -d;
+
+				dirLight.shadowCameraFar = 3500;
+				dirLight.shadowBias = -0.0001;
+				dirLight.shadowDarkness = 0.35;*/
+
+				var light = new THREE.DirectionalLight(0xffffff, 1.5, 100);
+				light.position.set(100000, 15000, 10000); 			//default; light shining from top
+				light.castShadow = true;            // default false
+				scene.add(light);
+				//scene.add(light.target);
+				//light.target = pivot;
+				//light.target.position.set(100, 100, 100);
+
+			    //Set up shadow properties for the light
+				light.shadow.mapSize.width = 512;  // default
+				light.shadow.mapSize.height = 512; // default
+				light.shadow.camera.near = 0.5;    // default
+				light.shadow.camera.far = 120000;     // default
+
+				var d = 7500;
+
+				light.shadow.camera.left = -d;
+				light.shadow.camera.right = d;
+				light.shadow.camera.top = d;      //d
+				light.shadow.camera.bottom = -d;
+
+			    //Create a helper for the shadow camera (optional)
+				var helper = new THREE.CameraHelper(light.shadow.camera);
+				//scene.add(helper);
+
+				var dist = 8000;    // light distance
+
+				function createLight(color) {
+				    var intensity = 1.5;
+				    var pointLight = new THREE.PointLight(color, intensity, 20);
+				    pointLight.castShadow = true;
+				    pointLight.shadow.camera.near = 1;
+				    pointLight.shadow.camera.far = 60;
+				    pointLight.shadow.bias = -0.005; // reduces self-shadowing on double-sided objects
+				    var geometry = new THREE.SphereGeometry(50, 32, 32);        // 0.3, 12, 6
+				    var material = new THREE.MeshBasicMaterial({ color: color });
+				    material.color.multiplyScalar(intensity);
+				    var sphere = new THREE.Mesh(geometry, material);
+				    pointLight.add(sphere);
+				    var texture = new THREE.CanvasTexture(generateTexture());
+				    texture.magFilter = THREE.NearestFilter;
+				    texture.wrapT = THREE.RepeatWrapping;
+				    texture.wrapS = THREE.RepeatWrapping;
+				    texture.repeat.set(1, 3.5);
+				    var geometry = new THREE.SphereGeometry(2, 32, 8);
+				    var material = new THREE.MeshPhongMaterial({
+				        side: THREE.DoubleSide,
+				        alphaMap: texture,
+				        alphaTest: 0.5
+				    });
+				    var sphere = new THREE.Mesh(geometry, material);
+				    sphere.castShadow = true;
+				    sphere.receiveShadow = true;
+				    pointLight.add(sphere);
+				    // custom distance material
+				    var distanceMaterial = new THREE.MeshDistanceMaterial({
+				        alphaMap: material.alphaMap,
+				        alphaTest: material.alphaTest
+				    });
+				    sphere.customDistanceMaterial = distanceMaterial;
+				    return pointLight;
+				}
+
+				pointLight = createLight(0xff0040);
+				scene.add(pointLight);
+				pointLight.position.set(3600, 4400, -2600);
+				pointLight.distance = dist;
+
+				pointLight2 = createLight(0x0040ff);
+				scene.add(pointLight2);
+				pointLight2.position.set(3600, 4400, 3350);
+				pointLight2.distance = dist;
+
+				pointLight3 = createLight(0x80ff80);
+				scene.add(pointLight3);
+				pointLight3.position.set(-3600, 4400, 3350);
+				pointLight3.distance = dist;
+
+				pointLight4 = createLight(0xffaa00);
+				scene.add(pointLight4);
+				pointLight4.position.set(-3600, 4400, -2600);
+				pointLight4.distance = dist;
+
+			    
+				function generateTexture() {
+				    var canvas = document.createElement('canvas');
+				    canvas.width = 2;
+				    canvas.height = 2;
+				    var context = canvas.getContext('2d');
+				    context.fillStyle = 'white';
+				    context.fillRect(0, 1, 2, 1);
+				    return canvas;
+				}
+
+
+			    ///////////
+			    // VIDEO //
+			    ///////////
+
+			    // create the video element
+				video = document.createElement('video');
+			    // video.id = 'video';
+			    // video.type = ' video/ogg; codecs="theora, vorbis" ';
+				video.src = "./trailer.mp4";
+				video.load(); // must call after setting/changing source
+				video.play();
+
+			    // alternative method -- 
+			    // create DIV in HTML:
+			    // <video id="myVideo" autoplay style="display:none">
+			    //		<source src="videos/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'>
+			    // </video>
+			    // and set JS variable:
+			    // video = document.getElementById( 'myVideo' );
+
+				videoImage = document.createElement('canvas');
+				videoImage.width = 640;
+				videoImage.height = 360;
+
+				videoImageContext = videoImage.getContext('2d');
+			    // background color if no video present
+				videoImageContext.fillStyle = '#000000';
+				videoImageContext.fillRect(0, 0, videoImage.width, videoImage.height);
+
+				videoTexture = new THREE.Texture(videoImage);
+				videoTexture.minFilter = THREE.LinearFilter;
+				videoTexture.magFilter = THREE.LinearFilter;
+
+				var movieMaterial = new THREE.MeshBasicMaterial({ map: videoTexture, overdraw: true, side: THREE.DoubleSide });
+			    // the geometry on which the movie will be displayed;
+			    // 		movie image will be scaled to fit these dimensions.
+				var movieGeometry = new THREE.PlaneGeometry(240, 100, 4, 4);
+				var movieScreen = new THREE.Mesh(movieGeometry, movieMaterial);
+				movieScreen.position.set(0, 3500, 3520);
+				movieScreen.scale.x = movieScreen.scale.y = movieScreen.scale.z = 15;
+				scene.add(movieScreen);
+
+
+                // RENDERER
+
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize(window.innerWidth, window.innerHeight);
+				renderer.setClearColor(scene.fog.color);
+				//renderer.shadowMap.renderSingleSided = false;
+				renderer.shadowMap.enabled = true;
+				renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+				document.body.appendChild( renderer.domElement );
+
+				//
+
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function animate() {
+			    requestAnimationFrame(animate);
+
+			    mesh.rotation.x += 0.005;
+			    mesh.rotation.y += 0.01;
+
+			    render();
+			    update();
+			}
+
+			function update() {
+
+				//requestAnimationFrame( animate );
+
+				keyboard.update();
+
+				if (keyboard.pressed("P"))
+				    video.play();
+
+				if (keyboard.pressed("space"))
+				    video.pause();
+
+				if (keyboard.pressed("S")) // stop video
+				{
+				    video.pause();
+				    video.currentTime = 0;
+				}
+
+				if (keyboard.pressed("R")) video.currentTime = 0;   //rewind video
+
+				if (keyboard.pressed("up") && keyboard.pressed("down")) {
+				    bool = false;
+				}
+
+				if (keyboard.pressed("up")) {       // PAINA UP: AUTO LIIKKUU ETEENPÄIN
+
+				    pivot.rotation.y += (nopeus + 0.002);
+
+				    if (bool == false) {
+				        nopeus = 0.001;
+				        bool = true;
+				    }
+
+				    if (nopeus < 0.02) {
+				        nopeus *= 1.02;
+				    }
+
+				    else {
+				        nopeus *= 1;
+				    }
+
+				}
+
+				else if (keyboard.pressed("down")) {        // PAINA DOWN: AUTO LIIKKUU TAAKSEPÄIN
+
+				    if (bool == false) {
+				        nopeus = 0.001;
+				        bool = true;
+				    }
+
+				    pivot.rotation.y -= (nopeus + 0.002);
+
+				    if (nopeus < 0.01) {
+				        nopeus *= 1.02;
+				    }
+
+				    else {
+				        nopeus *= 1;
+				    }
+	
+				}
+
+				else {
+				    bool = false;
+				}
+				
+                if (keyboard.down("E")) {        // AUKAISEE JA SULKEE TALON OVEN
+
+                    if (ovikiinni == true) {
+                        ovi.position.x = -400;
+                        ovi.position.z = ovi.geometry.parameters.width / 2;
+                        ovi.rotation.y = -Math.PI / 2;
+                        ovikiinni = false;
+                    }
+
+                    else if (ovikiinni == false) {
+                        ovi.position.x = oviposx;
+                        ovi.position.z = house.position.z;
+                        ovi.rotation.y = 0;
+                        ovikiinni = true;
+                    }
+	
+				}
+
+                controls.update();
+			}
+
+			function render() {
+
+			    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+			        videoImageContext.drawImage(video, 0, 0);
+			        if (videoTexture)
+			            videoTexture.needsUpdate = true;
+			    }
+
+			    renderer.render(scene, camera);
+			}
+
+		</script>
+
+	</body>
+</html>
