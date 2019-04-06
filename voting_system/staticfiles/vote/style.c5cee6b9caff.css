@@ -1,0 +1,212 @@
+body {
+    font-size: 2em;
+    font-family: Verdana, sans-serif;
+    text-align: center;
+}
+
+#accordion {
+    width: 900px;
+    margin: 50px auto;
+}
+
+
+#accordion .ui-accordion-content a {
+    color: black;
+}
+
+#accordion .ui-accordion-content {
+    width: 100%;
+    background-color: #f3f3f3;
+    color: #777;
+    font-size: 0.5em;
+    line-height: 16pt;
+    text-align: center;
+}
+
+#accordion .ui-accordion-header {
+    background-color: #ccc;
+    color: black;
+    margin: 0px;
+}
+
+#accordion .ui-accordion-header a {
+    color: #4CAF50;
+    line-height: 42px;
+    display: block;
+    font-size: 12pt;
+    width: 100%;
+    text-indent: 10px;
+}
+
+.vastaukset {
+    display: inline-block;
+    overflow: auto;
+    width: 500px;
+    height: 500px;
+    padding-top: 100px;
+    text-align: center;
+}
+
+#kaikkivastaukset {
+    border: 1px solid black;
+    overflow: auto;
+    height: 502px;
+}
+
+#piechart {
+    float: left;
+}
+
+li a {
+    color: green;
+}
+
+li {
+    list-style-type: none;
+}
+
+.title {
+    border: 1px solid black;
+    margin: 0 auto;
+    text-align: center;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: black;
+}
+
+form {
+    display: inline-block;
+}
+
+fieldset {
+    border: none;
+}
+
+input[type=submit] {
+    width: 100%;
+    font-size: 0.5em;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    align-items: center;
+    margin: 8px auto;
+    border: none;
+    cursor: pointer;
+}
+
+input:disabled,
+input[disabled] {
+    width: 100%;
+    font-size: 0.5em;
+    background-color: #cccccc;
+    color: #666666;
+    padding: 14px 20px;
+    align-items: center;
+    margin: 8px auto;
+    border: none;
+    cursor: pointer;
+}
+
+
+input[type=text],
+
+select {
+
+    width: 900px;
+    padding: 14px 20px;
+    margin: 8px auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: table;
+}
+
+input[type="text"] {
+    font-size: 0.7em;
+}
+
+#votenappi {
+    width: 500px;
+    margin: 20px auto;
+}
+
+.valinta {
+    min-width: 500px;
+}
+
+html {
+    height: 100%;
+    background: #e3e3e0;
+}
+
+a {
+    text-decoration: none;
+}
+
+:focus,
+:active {
+    outline: 0;
+}
+
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#accordion .ui-accordion-header:first-of-type {
+    background: #4CAF50;
+}
+
+@media only screen and (max-device-width: 480px) {
+
+    body {
+        text-align: center;
+        font-size: 1.5em;
+    }
+
+    #accordion {
+        width: 750px;
+    }
+
+    #accordion .ui-accordion-content {
+        font-size: 1em;
+    }
+    
+    input[type=text],
+
+    select {
+        width: 750px;
+    }
+
+    input[type=submit] {
+        font-size: 1em;
+    }
+    
+    input[type="text"] {
+    font-size: 1.2em;
+    }
+
+    .center {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .widget {
+        vertical-align: middle;
+    }
+
+    #kaikkivastaukset {
+        overflow: visible;
+        height: 1000px;
+    }
+
+    .vastaukset {
+        padding-top: 50px;
+        height: 360px;
+    }
+    
+    .vastaukset li {
+        font-size: 1.3em;
+    }
+}

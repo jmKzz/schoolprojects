@@ -1,0 +1,90 @@
+{% load i18n %} {% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.4, maximum-scale=1, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="{% static 'vote/style.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        var result = {}
+
+        $.ajaxSetup({
+            async: false,
+            data: { csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+
+        $.ajax({
+            async: false,
+            url: "/vote/request/",
+            type: 'POST',
+            data: {
+                'question_id': "{{ question.id }}",
+            },
+            dataType: 'json',
+            success: function(data) {
+                if (data) {
+                    result = data;
+                }
+            }
+        });
+
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Question', 'Votes'],
+                [result[0].fields.choice_text, result[0].fields.votes],
+                [result[1].fields.choice_text, result[1].fields.votes],
+                [result[2].fields.choice_text, result[2].fields.votes],
+            ]);
+
+            var options = {
+                title: '',
+                titleTextStyle: { fontSize: 40 },
+                backgroundColor: '#e3e3e0',
+                pieSliceText: 'none',
+                fontSize: 18,
+                pieSliceTextStyle: { color: 'white', fontSize: 20 },
+                legend: { position: 'labeled' },
+                is3D: true,
+
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="title">
+        <h1>
+            <a href="{% url 'vote:index' %}">Äänestys tsydeemi</a>
+        </h1>
+    </div>
+
+    <h2>Vote results:</h2>
+    <h3>{{ question.question_text }}</h3>
+
+    <div id="kaikkivastaukset">
+
+        <div class="vastaukset">
+            <ul>
+                {% for choice in question.choice_set.all %}
+                <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="piechart" style="width: 880px; height: 500px;"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+{% load i18n %} {% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.4, maximum-scale=1, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="{% static 'vote/style.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(function() {
+            $("#accordion").accordion({
+                active: false,
+                collapsible: true,
+            });
+        });
+        $(document).ready(function() {
+            $('#myForm input').keyup(function() {
+                var empty = false;
+                $('#myForm input').each(function() {
+                    if ($(this).val().length == 0) {
+                        empty = true;
+                    }
+                });
+                if (empty) {
+                    $('#submit').attr('disabled', 'disabled').val("Please fill all forms.");
+                }
+                else {
+                    $('#submit').attr('disabled', false).val("Submit Question");
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="title">
+        <h1><a href="{% url 'vote:index' %}">Äänestys tsydeemi</a></h1>
+    </div>
+
+    <div id="accordion" data-role="collapsible" data-collapsed="false" class="ui-widget-content">
+        <p>Latest questions</p>
+        {% if latest_question_list %}
+        <ul data-role="listview">
+            {% for question in latest_question_list %}
+            <li><a href="{% url 'vote:detail' question.id %}">{{ question.question_text }}</a></li>
+            {% endfor %} {% else %}
+            <p>No votes are available.</p>
+            {% endif %}
+        </ul>
+    </div>
+
+    {% if error_message %}
+    <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <form id="myForm" method="POST" action="/vote/reply/">{% csrf_token %}
+        <p>Create your own vote</p> <input type="text" id="que" name="que" placeholder="Add your question here">
+        <input type="text" id="cho" name="cho" placeholder="Add your first choice here">
+        <input type="text" id="cho2" name="cho2" placeholder="Second choice">
+        <input type="text" id="cho3" name="cho3" placeholder="Third choice">
+        <input type="submit" id="submit" value="Please fill all forms." disabled="disabled">
+    </form>
+</body>
+
+</html>
