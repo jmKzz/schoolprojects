@@ -32,3 +32,9 @@ Just a basic to-do list that I did using javascript, html and css. I made it so 
 ![threejs](https://user-images.githubusercontent.com/41001254/55139440-74bee300-513e-11e9-877b-c7f604104fdd.PNG)
 
 Just some fun visualization with imported models and a self made house by using threejs geometry system. The car and the door are interactable with some keypresses. This runs in a browser and Firefox is preferred.
+
+<h3>Voting System</h3>
+
+![votingsystem](https://user-images.githubusercontent.com/41001254/55671539-be73a000-5899-11e9-8f61-51872db91184.PNG)
+
+Me and a fellow student created this voting system together using django, html, CSS and AJAX. You can create your own query's and share them with others. It also has a piechart that shows how the votes were distributed. I was mainly responsible for the look of the app and I managed to make it look decent enough for mobile users aswell.
